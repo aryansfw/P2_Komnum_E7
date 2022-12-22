@@ -1,14 +1,13 @@
 import pandas as pd
-import numpy as np
 import math
 
 # R(n, m) = 1/(4^m - 1) * (4^m*R(n, m - 1) - R(n - 1, m - 1))
 class Romberg:
-    def __init__(self, f, lower_limit, upper_limit, max_steps):
+    def __init__(self, f, lower_limit, upper_limit, steps):
         self.f = f
         self.lower_limit = lower_limit
         self.upper_limit = upper_limit
-        self.max_steps = max_steps
+        self.steps = steps
         self.result = []
         self.best_approximation = 0
 
@@ -24,7 +23,7 @@ class Romberg:
         self.result.append([r0])
 
         # Calculate approximations
-        for i in range(1, self.max_steps):
+        for i in range(1, self.steps):
             h /= 2
             points = 2**(i - 1)
 
@@ -50,8 +49,8 @@ class Romberg:
         # Print table
         print("Integration using Romberg Method:")
         print(pd.DataFrame(self.result,
-                            columns=list(range(self.max_steps)),
-                            index=list(range(self.max_steps)))
+                            columns=list(range(self.steps)),
+                            index=list(range(self.steps)))
                             .fillna(''))
         # Print best approximation
         print(f"Best approximation of the definite integral is {self.best_approximation:.6f}")
@@ -63,7 +62,10 @@ def f(x):
     return 1/(1+x)
 
 if __name__ == '__main__':
-    romberg = Romberg(f, 0, 1, 5)
+    # Getting input
+    (lower_limit, upper_limit, steps) = [int(x) for x in input("Input lower limit, upper limit, and steps (e.g, 0, 1, 5): ").split(',')]
 
+    # Generating integral approximation and printing it
+    romberg = Romberg(f, lower_limit, upper_limit, steps)
     romberg.generate()
     romberg.print_result()
