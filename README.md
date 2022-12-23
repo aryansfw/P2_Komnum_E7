@@ -16,7 +16,7 @@ $ git clone
 #### 2. Install libraries
 Install library yang diperlukan dengan
 ```bash
-$ pip install pandas
+$ pip install pandas scipy
 ```
 #### 3. Edit f(x)
 Dalam file `romberg.py` pada line 60 terdapat fungsi
