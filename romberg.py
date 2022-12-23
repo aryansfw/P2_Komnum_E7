@@ -63,7 +63,7 @@ class Romberg:
             return
         # Calculate relative error
         # relative error = (value, er)
-        actual_value = quad(self.f, 0, 1)[0]
+        actual_value = quad(self.f, lower_limit, upper_limit)[0]
         for i in range(self.steps):
             list = []
 
@@ -85,7 +85,7 @@ class Romberg:
         return self.best_approximation
 
 def f(x):
-    return 1/(1+x)
+    return math.sin(x) * math.e**x + 1/x
 
 if __name__ == '__main__':
     # Getting input
