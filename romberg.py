@@ -1,4 +1,5 @@
 import pandas as pd
+from scipy.integrate import quad
 import math
 
 # R(n, m) = 1/(4^m - 1) * (4^m*R(n, m - 1) - R(n - 1, m - 1))
@@ -9,6 +10,7 @@ class Romberg:
         self.upper_limit = upper_limit
         self.steps = steps
         self.result = []
+        self.relative_errors = []
         self.best_approximation = 0
 
     def generate(self):
@@ -55,6 +57,30 @@ class Romberg:
         # Print best approximation
         print(f"Best approximation of the definite integral is {self.best_approximation:.6f}")
     
+    def print_relative_error(self):
+        if len(self.result) == 0:
+            print("Please generate the values first using generate().")
+            return
+        # Calculate relative error
+        # relative error = (value, er)
+        actual_value = quad(self.f, 0, 1)[0]
+        for i in range(self.steps):
+            list = []
+
+            # Add value
+            value = self.result[i][i]
+            list.append(value)
+
+            # Calculator relative error
+            er = math.fabs((actual_value-value)/actual_value * 100) 
+            list.append(f"{er:.6f}%")
+
+            self.relative_errors.append(list)
+
+        # Printing the relative errors
+        print("Relative error for each step:")
+        print(pd.DataFrame(self.relative_errors, columns=["Value", "Relative Error"]))
+        
     def get_approximation(self):
         return self.best_approximation
 
@@ -69,3 +95,6 @@ if __name__ == '__main__':
     romberg = Romberg(f, lower_limit, upper_limit, steps)
     romberg.generate()
     romberg.print_result()
+
+    # Printing the relative error
+    romberg.print_relative_error()
