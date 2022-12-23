@@ -59,4 +59,14 @@ Integration using Romberg Method:
 4  5.180915  5.180706  5.180708  5.180708  5.180708
 Best approximation of the definite integral is 5.180708
 ```
-Dari 5 step diperoleh approksimaksi terbaik adalah `5.180708`
+Dari 5 step diperoleh approksimaksi terbaik adalah `5.180708`\
+Selain itu, program juga akan menghasilkan error relatif ($E_r$) seperti berikut:
+```
+Relative error for each step:
+      Value Relative Error
+0  5.253102      1.397396%
+1  5.175787      0.094980%
+2  5.180734      0.000510%
+3  5.180708      0.000006%
+4  5.180708      0.000000%
+```
